@@ -4,16 +4,15 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import images from "@/constants/images";
 import icons from "@/constants/icons";
 import { login } from "@/lib/appwrite";
-import { router } from "expo-router";
 
 const SignIn = () => {
   const handleLogin = async () => {
     const result = await login();
     if(result) {
       console.log("Login Successful");
-      router.push("/")
+     
     } else {
-      Alert.alert(title: "Error", message: "Failed to login")
+      Alert.alert("Error", "Failed to login")
     }
 
   };

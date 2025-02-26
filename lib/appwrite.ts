@@ -19,27 +19,27 @@ export const account = new Account(client);
 
 export async function login() {
     try {
-        const redirectUri = Linking.createURL(path: '/');
+        const redirectUri = Linking.createURL('/');
 
         const response = await account.createOAuth2Token(OAuthProvider.Google, redirectUri)
 
-        if(!response) throw new Error(message: "Failed to login");
+        if(!response) throw new Error("Failed to login");
 
         const browserResult = await openAuthSessionAsync(
             response.toString(),
             redirectUri
         )
 
-        if(browserResult.type !== "success") throw new Error(message: 'Failed to login');
+        if(browserResult.type !== "success") throw new Error('Failed to login');
         const url = new URL(browserResult.url);
 
         const secret = url.searchParams.get('secret')?.toString();
         const userId = url.searchParams.get('userId')?.toString();
 
-        if(!secret || !userId) throw new Error(message: 'Failed to login')
+        if(!secret || !userId) throw new Error('Failed to login')
         
         const session = await account.createSession(userId, secret)
-        if(!session) throw new Error(message: ''Failed to create a session);
+        if(!session) throw new Error('Failed to create a session');
 
         return true;
     } catch(err) {
@@ -50,7 +50,7 @@ export async function login() {
 
 export async function logout() {
     try {
-        await account.deleteSession(sessionId: 'current');
+        await account.deleteSession('current');
         return true;
     } catch(err) {
         console.log(err);
